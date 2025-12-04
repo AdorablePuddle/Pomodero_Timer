@@ -35,12 +35,18 @@ timer = lib.ui.PomoderoTimerUI(
 
 running = True
 timer.begin_rest_time()
+ready_time = True
 while running:
     clock.tick(144)
     screen.fill((0, 0, 0))
     
-    timer_text = text_font.render("Work time!" if timer.is_work_time() else "Rest time!", False, (255, 255, 255))
+    timer_text = text_font.render("Work time!" if timer.is_work_time() else ("Rest time!" if not ready_time else "Readying time!"), False, (255, 255, 255))
     screen.blit(timer_text, (screen.get_width() // 2 - timer_text.get_width() // 2, int((screen.get_height() // 2 - timer_text.get_height() // 2) - timer_text.get_height() * 1.25)))
+    
+    if timer.is_timer_paused():
+        paused_text = text_font.render("Paused", False, (128, 128, 128))
+        screen.blit(paused_text, (screen.get_width() // 2 - paused_text.get_width() // 2, int((screen.get_height() // 2 - paused_text.get_height() // 2) + paused_text.get_height() * 1.25)))
+    
     
     timer_surface = timer.draw_timer()
     screen.blit(timer_surface, (screen.get_width() // 2 - timer_surface.get_width() // 2, screen.get_height() // 2 - timer_surface.get_height() // 2))
@@ -48,6 +54,8 @@ while running:
     
     
     timer.timer_update()
+    if timer.is_work_time() and ready_time:
+        ready_time = False
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             timer.stop_internal_timer()
