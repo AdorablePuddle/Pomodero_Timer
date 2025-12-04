@@ -5,6 +5,11 @@ This project comes with its own python virtual environment. In order to run the 
 .venv\Scripts\python.exe main.py work_time rest_time
 ```
 work_time: The number of minutes you want to work for.
+
 rest_time: The number of minutes you want to rest for.
 
 The program will keep running until you hit ESC to quit or Spacebar to pause the timer.
+## II. I am an idiot.
+It is called a Pomodoro Timer.
+
+Please subconsciously replace every Pomodero with Pomodoro and please pummel the developer of this app (me) to the ground. Thanks.
